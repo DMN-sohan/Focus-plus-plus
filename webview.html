@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Focus++</title>
+  <style>
+    body { font-family: Arial, sans-serif; padding: 20px; }
+    h1 { text-align: center; }
+    .section { margin-bottom: 20px; }
+    .section h2 { margin-bottom: 10px; }
+    .subsection { margin-left: 20px; margin-bottom: 10px; }
+    .checkbox-group, .frequency-group { margin-bottom: 10px; }
+    .button { margin-top: 10px; }
+  </style>
+</head>
+<body>
+  <h1>Focus++</h1>
+  
+  <div class="section" id="exercise-section">
+    <h2>Exercise</h2>
+    <div class="checkbox-group">
+      <label><input type="checkbox" id="back-pain"> Back Pain</label><br>
+      <label><input type="checkbox" id="neck-pain"> Neck Pain</label><br>
+      <label><input type="checkbox" id="eye-strain"> Eye Strain</label><br>
+      <label><input type="checkbox" id="carpal-tunnel"> Carpal Tunnel</label>
+    </div>
+    <div class="frequency-group">
+      <label>Frequency: 
+        <select id="frequency">
+          <option value="15">Every 15 mins</option>
+          <option value="30">Every 30 mins</option>
+          <option value="45">Every 45 mins</option>
+          <option value="60">Every 1 hr</option>
+          <option value="120">Every 2 hrs</option>
+        </select>
+      </label>
+    </div>
+    <button class="button" onclick="startExercise()">Start Exercise</button>
+  </div>
+
+  <div class="section" id="timers-section">
+    <h2>Timers</h2>
+    <div class="subsection">
+      <h3>Pomodoro Timer</h3>
+      <button class="button" onclick="startPomodoro()">Start Pomodoro</button>
+    </div>
+    <div class="subsection">
+      <h3>Stopwatch</h3>
+      <button class="button" onclick="startStopwatch()">Start Stopwatch</button>
+    </div>
+    <div class="subsection">
+      <h3>Timer</h3>
+      <button class="button" onclick="startTimer()">Start Timer</button>
+    </div>
+    <div class="subsection">
+      <h3>World Clock</h3>
+      <button class="button" onclick="startWorldClock()">Start World Clock</button>
+    </div>
+  </div>
+
+  <script>
+    const vscode = acquireVsCodeApi();
+
+    function startExercise() {
+      const backPain = document.getElementById('back-pain').checked;
+      const neckPain = document.getElementById('neck-pain').checked;
+      const eyeStrain = document.getElementById('eye-strain').checked;
+      const carpalTunnel = document.getElementById('carpal-tunnel').checked;
+      const frequency = document.getElementById('frequency').value;
+
+      vscode.postMessage({
+        command: 'startExercise',
+        settings: { backPain, neckPain, eyeStrain, carpalTunnel, frequency }
+      });
+    }
+
+    function startPomodoro() {
+      vscode.postMessage({ command: 'startPomodoro' });
+    }
+
+    function startStopwatch() {
+      vscode.postMessage({ command: 'startStopwatch' });
+    }
+
+    function startTimer() {
+      vscode.postMessage({ command: 'startTimer' });
+    }
+
+    function startWorldClock() {
+      vscode.postMessage({ command: 'startWorldClock' });
+    }
+  </script>
+</body>
+</html>
